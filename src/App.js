@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+
+import Bill from './components/Bill';
+import Friends from './components/Friends';
+import AddFriend from './components/AddFriend';
 
 function App() {
+  const [friends, setFriend] = useState([]);
+  function addFriendList(friend) {
+    setFriend((friends) => [...friends, friend]);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Friends friends={friends} />
+      <AddFriend onAddFriendList={addFriendList} />
+      <Bill />
     </div>
   );
 }

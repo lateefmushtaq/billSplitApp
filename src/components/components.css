@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 300px;
+    /* Adjust as needed */
+}
+
+.profile-pic img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.details {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.details p {
+    margin: 0;
+    padding: 0;
+}
+
+.details p:first-child {
+    font-weight: bold;
+}
+
+.select-button {
+    margin-left: 10px;
+}
