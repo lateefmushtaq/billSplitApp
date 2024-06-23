@@ -1,7 +1,7 @@
 import Friend from "./Friend";
 import "./components.css";
 
-function Friends({ friends }) {
+function Friends({ friends, onIsSelected }) {
   return (
     <div className="main">
       <h3>Friend List</h3>
@@ -11,7 +11,7 @@ function Friends({ friends }) {
         <div className="friends-container">
           {friends.map((friend) => (
             <div className="container" key={friend.id}>
-              <Friend key={friend.id} friend={friend} />
+              <Friend friend={friend} onIsSelected={onIsSelected} />
             </div>
           ))}
         </div>

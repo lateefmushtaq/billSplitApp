@@ -1,11 +1,11 @@
 import React from "react";
 import "./components.css";
 
-function Friend({ friend }) {
+function Friend({ friend, onIsSelected }) {
   return (
     <div className="container">
       <div className="profile-pic">
-        <img src={friend.image} alt={""} />
+        <img src={friend.image} alt={friend.name} />
       </div>
       <div className="details">
         <p>{friend.name}</p>
@@ -17,11 +17,13 @@ function Friend({ friend }) {
           {friend.balance === 0
             ? "You are all equal"
             : friend.balance < 0
-            ? `${friend.name} owes you ${friend.balance}`
-            : `you owe ${friend.name} ${friend.balance}$`}
+            ? `${friend.name} owes you $${Math.abs(friend.balance)}`
+            : `You owe ${friend.name} $${Math.abs(friend.balance)}`}
         </p>
       </div>
-      <button className="select-button">Select</button>
+      <button onClick={() => onIsSelected(friend)} className="select-button">
+        Select
+      </button>
     </div>
   );
 }

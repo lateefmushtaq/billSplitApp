@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./components.css";
+
 function AddFriend({ onAddFriendList }) {
   const [name, setName] = useState("");
   const [image, setImage] = useState("https://i.pravatar.cc/48");
   const [show, setShow] = useState(true);
+
   function handleShow() {
-    setShow((pre) => !pre);
+    setShow((prev) => !prev);
   }
 
   function addFriend() {
@@ -13,19 +15,22 @@ function AddFriend({ onAddFriendList }) {
     const newFriend = {
       id,
       name,
-      balance: -1,
+      balance: 0,
       image: `${image}?=${id}`,
     };
     setImage("https://i.pravatar.cc/48");
 
-    newFriend.name && onAddFriendList(newFriend);
+    if (newFriend.name) {
+      onAddFriendList(newFriend);
+      setName(""); // Clear input after adding
+    }
   }
+
   return (
     <>
       {show === true ? (
         <div className="add">
           <div>
-            {" "}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Add Friends</h3>
               <button className="close-button" onClick={handleShow}>
@@ -40,7 +45,6 @@ function AddFriend({ onAddFriendList }) {
             />
           </div>
           <div>
-            {" "}
             <label> 📷 Friends Image:</label>
             <input
               value={image}
@@ -49,7 +53,6 @@ function AddFriend({ onAddFriendList }) {
             />
           </div>
           <div className="add-button">
-            {" "}
             <button onClick={addFriend}>Add</button>
           </div>
         </div>
