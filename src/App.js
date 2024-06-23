@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import './App.css'
 
 import Bill from './components/Bill';
 import Friends from './components/Friends';
@@ -11,11 +11,14 @@ function App() {
     setFriend((friends) => [...friends, friend]);
   }
   return (
-    <div>
+
+    <div className="app">
       <Friends friends={friends} />
-      <AddFriend onAddFriendList={addFriendList} />
       <Bill />
+      <AddFriend onAddFriendList={addFriendList} />
     </div>
+
+
   );
 }
 
