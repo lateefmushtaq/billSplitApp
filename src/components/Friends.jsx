@@ -1,7 +1,11 @@
+import { useContext } from "react";
+import { appContext } from "../App"; // Import correctly
 import Friend from "./Friend";
 import "./components.css";
 
-function Friends({ friends, onIsSelected }) {
+function Friends({ onIsSelected }) {
+  const { friends } = useContext(appContext);
+
   return (
     <div className="main">
       <h3>Friend List</h3>

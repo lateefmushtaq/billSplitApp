@@ -1,7 +1,15 @@
 import React from "react";
 import "./components.css";
+import { useContext } from "react";
+import { appContext } from "../App";
 
-function Friend({ friend, onIsSelected }) {
+function Friend({ friend }) {
+  const { setSelectedFriend } = useContext(appContext);
+
+  function isSelected() {
+    setSelectedFriend(friend);
+  }
+
   return (
     <div className="container">
       <div className="profile-pic">
@@ -21,7 +29,7 @@ function Friend({ friend, onIsSelected }) {
             : `You owe ${friend.name} $${Math.abs(friend.balance)}`}
         </p>
       </div>
-      <button onClick={() => onIsSelected(friend)} className="select-button">
+      <button onClick={isSelected} className="select-button">
         Select
       </button>
     </div>
