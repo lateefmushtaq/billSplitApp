@@ -1,39 +1,23 @@
-import { useState, createContext } from "react";
+import React, { } from 'react';
 import './App.css';
-import Bill from './components/Bill';
-import Friends from './components/Friends';
-import AddFriend from './components/AddFriend';
 
-export const appContext = createContext();
+import AddFriend from './components/AddFriend';
+import { ContextProvider } from './AppContext/ContextProvider';
+import Friends from './components/Friends';
+
+
 
 function App() {
-  const [selectedFriend, setSelectedFriend] = useState(null);
-  const [friends, setFriends] = useState([]);
 
-  function addFriendList(friend) {
-    setFriends((prevFriends) => {
-      if (prevFriends.find(f => f.name === friend.name)) {
-        return prevFriends;
-      }
-      return [...prevFriends, friend];
-    });
-  }
 
   return (
-    <appContext.Provider
-      value={{
-        friends,
-        setFriends,
-        selectedFriend,
-        setSelectedFriend,
-      }}
-    >
-      <div className="app">
-        <Friends />
-        {selectedFriend && <Bill />}
-        <AddFriend onAddFriendList={addFriendList} />
-      </div>
-    </appContext.Provider>
+    <ContextProvider >
+
+      <AddFriend />
+      <Friends />
+
+
+    </ContextProvider >
   );
 }
 

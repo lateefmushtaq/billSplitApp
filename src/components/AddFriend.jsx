@@ -1,69 +1,72 @@
-import { useState } from "react";
-import "./components.css";
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
-function AddFriend({ onAddFriendList }) {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("https://i.pravatar.cc/48");
-  const [show, setShow] = useState(true);
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, TextField, Stack } from "@mui/material";
+import AuthContext from "../AppContext/ContextProvider";
+import CustomizedButton from "./Button";
+import { ThemeProvider } from "@emotion/react";
+import { customTheme } from "./ThemeProvider";
 
-  function handleShow() {
-    setShow((prev) => !prev);
-  }
-
-  function addFriend() {
-    const id = crypto.randomUUID();
-    const newFriend = {
-      id,
-      name,
-      balance: 0,
-      image: `${image}?=${id}`,
-    };
-    setImage("https://i.pravatar.cc/48");
-
-    if (newFriend.name) {
-      onAddFriendList(newFriend);
-      setName(""); // Clear input after adding
+function AddFriend() {
+  const { setFriend, friend } = useContext(AuthContext);
+  const schema = yup.object().shape({
+    friendName: yup
+      .string()
+      .required("Friend's name is required")
+      .min(3, "Name must be 3 char long"),
+    // balance: yup.number().required(),
+  });
+  const onSubmit = (data) => {
+    if (data) {
+      let name = data.friendName;
+      let balance = data.balance;
+      setFriend([...friend, { name, id: Date.now(), balance }]);
     }
-  }
-
+    reset();
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ resolver: yupResolver(schema) });
   return (
-    <>
-      {show === true ? (
-        <div className="add">
-          <div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Add Friends</h3>
-              <button className="close-button" onClick={handleShow}>
-                &times;
-              </button>
-            </div>
-            <label> 📇 Friends Name :</label>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
+    <ThemeProvider theme={customTheme(customTheme)}>
+      <Box
+        sx={{
+          display: "flex",
+          m: 2,
+          justifyContent: "end",
+        }}
+        xs={12}
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 1, sm: 2, md: 4 }}
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              p: 2,
+            }}
+          >
+            <TextField
+              color="primary"
+              style={{ padding: "2px" }}
+              id="outlined-error"
+              label="Friend Name"
+              error={!!errors.friendName}
+              variant="outlined"
+              {...register("friendName")}
             />
-          </div>
-          <div>
-            <label> 📷 Friends Image:</label>
-            <input
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              type="text"
-            />
-          </div>
-          <div className="add-button">
-            <button onClick={addFriend}>Add</button>
-          </div>
-        </div>
-      ) : (
-        <div className="add-button">
-          <button style={{ margin: 0 }} onClick={handleShow}>
-            Add friends
-          </button>
-        </div>
-      )}
-    </>
+
+            <CustomizedButton type="submit">Add Friend</CustomizedButton>
+          </Stack>
+        </form>
+      </Box>
+    </ThemeProvider>
   );
 }
 
