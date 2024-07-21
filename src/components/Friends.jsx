@@ -10,10 +10,9 @@ import {
   ListItemAvatar,
   Avatar,
   Typography,
-  Stack,
-  TextField,
 } from "@mui/material";
 import AuthContext from "../AppContext/ContextProvider";
+import Bill from "./Bill";
 
 function Friends() {
   const { friend, setFriend, setSelected, selected } = useContext(AuthContext);
@@ -23,11 +22,6 @@ function Friends() {
   }
   function handleSelect(item) {
     setSelected(item);
-    console.log(item.balance);
-  }
-
-  function createColor(selected) {
-    return selected.balance <= 0 ? "green" : "red";
   }
 
   return (
@@ -101,34 +95,7 @@ function Friends() {
         ))}
       </Box>
 
-      {selected && (
-        <Box
-          width={"500px"}
-          sx={{
-            border: "2px solid grey",
-            bgcolor: "background.paper",
-            boxShadow: `0px 6px 8px ${createColor(selected)}`,
-          }}
-        >
-          <Typography gutterBottom variant="h6" component="div">
-            {` Bill with ${selected.name}`}
-          </Typography>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 1, sm: 2, md: 4 }}
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              p: 2,
-            }}
-          >
-            <Typography>
-              {`${selected.name} owes you ${selected.balance}`}
-              <TextField></TextField>
-            </Typography>
-          </Stack>
-        </Box>
-      )}
+      {selected && <Bill />}
     </Box>
   );
 }

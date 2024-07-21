@@ -10,19 +10,17 @@ import { ThemeProvider } from "@emotion/react";
 import { customTheme } from "./ThemeProvider";
 
 function AddFriend() {
-  const { setFriend, friend } = useContext(AuthContext);
+  const { setFriend, friend, bill } = useContext(AuthContext);
   const schema = yup.object().shape({
     friendName: yup
       .string()
       .required("Friend's name is required")
       .min(3, "Name must be 3 char long"),
-    // balance: yup.number().required(),
   });
   const onSubmit = (data) => {
     if (data) {
       let name = data.friendName;
-      let balance = data.balance;
-      setFriend([...friend, { name, id: Date.now(), balance }]);
+      setFriend([...friend, { name, id: Date.now(), balance: 0 }]);
     }
     reset();
   };
