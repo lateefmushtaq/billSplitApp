@@ -15,10 +15,11 @@ import AuthContext from "../AppContext/ContextProvider";
 import Bill from "./Bill";
 
 function Friends() {
-  const { friend, setFriend, setSelected, selected } = useContext(AuthContext);
+  const { friends, setFriends, setSelected, selected } =
+    useContext(AuthContext);
   function handleDelete(id) {
-    const updatedFriends = friend.filter((e) => e.id !== id);
-    setFriend(updatedFriends);
+    const updatedFriends = friends.filter((e) => e.id !== id);
+    setFriends(updatedFriends);
   }
   function handleSelect(item) {
     setSelected(item);
@@ -49,7 +50,7 @@ function Friends() {
         <Typography gutterBottom variant="h6" component="div">
           My Friends
         </Typography>
-        {friend.map((item) => (
+        {friends.map((item) => (
           <List
             key={item.id}
             sx={{
@@ -74,7 +75,7 @@ function Friends() {
                       variant="body2"
                       color="text.primary"
                     >
-                      {item.balance}
+                      {isNaN(item.balance) ? "error" : item.balance}
                     </Typography>
                   </>
                 }

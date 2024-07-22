@@ -3,15 +3,15 @@ import React, { createContext, useEffect, useState } from "react";
 const AuthContext = createContext({});
 
 export const ContextProvider = ({ children }) => {
-  const [friend, setFriend] = useState(() => {
+  const [friends, setFriends] = useState(() => {
     const storedFriends = localStorage.getItem("friends");
     return storedFriends ? JSON.parse(storedFriends) : [];
   });
   const [selected, setSelected] = useState();
   const [bill, setBill] = useState();
   useEffect(() => {
-    localStorage.setItem("friends", JSON.stringify(friend));
-  }, [friend]);
+    localStorage.setItem("friends", JSON.stringify(friends));
+  }, [friends]);
 
   const [list, setList] = useState(() => {
     const storedData = localStorage.getItem("Friends");
@@ -21,8 +21,8 @@ export const ContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        friend,
-        setFriend,
+        friends,
+        setFriends,
         list,
         setList,
 
